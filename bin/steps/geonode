@@ -25,6 +25,7 @@ if (pip-grep -s requirements.txt geonode-notification &> /dev/null) then
   ln -s .heroku/vendor/lib/libgeos-3.5.0.so .heroku/vendor/lib/libgeos.so
   ln -s .heroku/vendor/lib/libproj.so.9.1.0 .heroku/vendor/lib/libproj.so
   ln -s .heroku/vendor/lib/libproj.so.9.1.0 .heroku/vendor/lib/libproj.so.9
+  echo "-----> Bootstrapping gdal python modules"
   curl $GDAL_PYTHON -s | tar zxv -C .heroku/ &> /dev/null
 
 fi
