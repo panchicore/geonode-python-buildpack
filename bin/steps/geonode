@@ -18,13 +18,15 @@ if (pip-grep -s requirements.txt geonode-notification &> /dev/null) then
   # Download and extract binaries + libraries into target vendor directory.
   curl $GEONODE_VENDOR -s | tar zxv -C .heroku/ &> /dev/null
   echo "-----> Creating symbolic links for geonode libs"
-  ln -s .heroku/vendor/lib/libgdal.so.20.0.1 .heroku/vendor/lib/libgdal.so
-  ln -s .heroku/vendor/lib/libgdal.so.20.0.1 .heroku/vendor/lib/libgdal.so.20
-  ln -s .heroku/vendor/lib/libgeos_c.so.1.9.0 .heroku/vendor/lib/libgeos_c.so
-  ln -s .heroku/vendor/lib/libgeos_c.so.1.9.0 .heroku/vendor/lib/libgeos_c.so.1
-  ln -s .heroku/vendor/lib/libgeos-3.5.0.so .heroku/vendor/lib/libgeos.so
-  ln -s .heroku/vendor/lib/libproj.so.9.1.0 .heroku/vendor/lib/libproj.so
-  ln -s .heroku/vendor/lib/libproj.so.9.1.0 .heroku/vendor/lib/libproj.so.9
+  cd .heroku/vendor/lib/
+  ln -s libgdal.so.20.0.1 libgdal.so
+  ln -s libgdal.so.20.0.1 libgdal.so.20
+  ln -s libgeos_c.so.1.9.0 libgeos_c.so
+  ln -s libgeos_c.so.1.9.0 libgeos_c.so.1
+  ln -s libgeos-3.5.0.so libgeos.so
+  ln -s libproj.so.9.1.0 libproj.so
+  ln -s libproj.so.9.1.0 libproj.so.9
+  cd ../../../
   echo "-----> Bootstrapping gdal python modules"
   curl $GDAL_PYTHON -s | tar zxv -C .heroku/ &> /dev/null
 
