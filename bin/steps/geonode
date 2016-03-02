@@ -19,6 +19,7 @@ if (pip-grep -s requirements.txt geonode-notification &> /dev/null) then
   curl $GEONODE_VENDOR -s | tar zxv -C .heroku/ &> /dev/null
   echo "-----> Creating symbolic links for geonode libs"
   cd .heroku/vendor/lib/
+  find -type l -delete
   ln -s libgdal.so.20.0.1 libgdal.so
   ln -s libgdal.so.20.0.1 libgdal.so.20
   ln -s libgeos_c.so.1.9.0 libgeos_c.so
