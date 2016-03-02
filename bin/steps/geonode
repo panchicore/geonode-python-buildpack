@@ -33,16 +33,15 @@ if (pip-grep -s requirements.txt geonode-notification &> /dev/null) then
   mkdir -p .profile.d/
   echo "-----> Adding profile.d script for geonode"
   cat <<EOF > .profile.d/geonode.sh
-  export PATH="${PATH:+$PATH:}/app/.heroku/vendor/bin:/app/.heroku/python/bin"
-  export PYTHONPATH="${PYTHONPATH:+$PYTHONPATH:}/app/.heroku/python/lib/python2.7/site-packages:/app/"
-  export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}/app/.heroku/vendor/lib/:/app/.heroku/python/lib/"
-  export LIBRARY_PATH="${LIBRARY_PATH:+$LD_LIBRARY_PATH:}/app/.heroku/vendor/lib/:/app/.heroku/python/lib/"
-  export INCLUDE_PATH="${INCLUDE_PATH:+$INCLUDE_PATH:}/app/.heroku/vendor/include/"
-  export CPATH="$INCLUDE_PATH"
-  export CPPPATH="$INCLUDE_PATH"
-  export GDAL_DATA="/app/.heroku/vendor/share/gdal"
-  export PROJ_LIB="/app/.heroku/vendor/share/proj"
-  export GEOS_LIBRARY_PATH="/app/.heroku/vendor/lib"
+export PATH="/app/.heroku/vendor/bin:/app/.heroku/python/bin:\$PATH"
+export LD_LIBRARY_PATH="/app/.heroku/vendor/lib/:/app/.heroku/python/lib/:\$LD_LIBRARY_PATH"
+export LIBRARY_PATH="/app/.heroku/vendor/lib/:/app/.heroku/python/lib/:\$LIBRARY_PATH"
+export INCLUDE_PATH="/app/.heroku/vendor/include/:\$INCLUDE_PATH"
+export CPATH="\$INCLUDE_PATH"
+export CPPPATH="\$INCLUDE_PATH"
+export GDAL_DATA="/app/.heroku/vendor/share/gdal"
+export PROJ_LIB="/app/.heroku/vendor/share/proj"
+export GEOS_LIBRARY_PATH="/app/.heroku/vendor/lib"
 EOF
 fi
 
