@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+GEONODE_VENDOR="https://s3.amazonaws.com/boundlessps-public/cf/vendor.tar.gz"
+GDAL_PYTHON="https://s3.amazonaws.com/boundlessps-public/cf/python.tar.gz"
+
+PKG_CONFIG_PATH="/app/.heroku/vendor/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+# Syntax sugar.
+source $BIN_DIR/utils
+
+bpwatch start geonode_gdal_install
+
+# If GeoNode exists within requirements, use vendored gdal, geos and proj.
+if (pip-grep -s requirements.txt geonode-notification &> /dev/null) then
+
+  echo "-----> Noticed GeoNode. Bootstrapping gdal, geos and proj."
+  mkdir -p .heroku/
+  # Download and extract binaries + libraries into target vendor directory.
+  curl $GEONODE_VENDOR -s | tar zxv -C .heroku/ &> /dev/null
+  echo "-----> Creating symbolic links for geonode libs"
+  ln -s .heroku/vendor/lib/libgdal.so.20.0.1 .heroku/vendor/lib/libgdal.so
+  ln -s .heroku/vendor/lib/libgdal.so.20.0.1 .heroku/vendor/lib/libgdal.so.20
+  ln -s .heroku/vendor/lib/libgeos_c.so.1.9.0 .heroku/vendor/lib/libgeos_c.so
+  ln -s .heroku/vendor/lib/libgeos_c.so.1.9.0 .heroku/vendor/lib/libgeos_c.so.1
+  ln -s .heroku/vendor/lib/libgeos-3.5.0.so .heroku/vendor/lib/libgeos.so
+  ln -s .heroku/vendor/lib/libproj.so.9.1.0 .heroku/vendor/lib/libproj.so
+  ln -s .heroku/vendor/lib/libproj.so.9.1.0 .heroku/vendor/lib/libproj.so.9
+  curl $GDAL_PYTHON -s | tar zxv -C .heroku/ &> /dev/null
+
+fi
+
+bpwatch stop geonode_gdal_install
