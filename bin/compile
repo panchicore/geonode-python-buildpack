@@ -211,7 +211,8 @@ source $BIN_DIR/steps/pylibmc
 source $BIN_DIR/steps/cryptography
 
 # GDAL support.
-source $BIN_DIR/steps/gdal
+# commented out since geonode will install required vendor packages
+# source $BIN_DIR/steps/gdal
 
 # GeoNode support.
 source $BIN_DIR/steps/geonode
