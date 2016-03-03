@@ -20,13 +20,45 @@ if (pip-grep -s requirements.txt geonode-notification &> /dev/null) then
   echo "-----> Creating symbolic links for geonode libs"
   cd .heroku/vendor/lib/
   find -type l -delete
+  # gdal
   ln -s libgdal.so.20.0.1 libgdal.so
   ln -s libgdal.so.20.0.1 libgdal.so.20
+  # geos
   ln -s libgeos_c.so.1.9.0 libgeos_c.so
   ln -s libgeos_c.so.1.9.0 libgeos_c.so.1
   ln -s libgeos-3.5.0.so libgeos.so
+  # proj
   ln -s libproj.so.9.1.0 libproj.so
   ln -s libproj.so.9.1.0 libproj.so.9
+  # libkml
+  ln -s libkmlbase.so.0.0.0 libkmlbase.so
+  ln -s libkmlbase.so.0.0.0 libkmlbase.so.0
+  ln -s libkmlconvenience.so.0.0.0 libkmlconvenience.so
+  ln -s libkmlconvenience.so.0.0.0 libkmlconvenience.so.0
+  ln -s libkmldom.so.0.0.0 libkmldom.so
+  ln -s libkmldom.so.0.0.0 libkmldom.so.0
+  ln -s libkmlengine.so.0.0.0 libkmlengine.so
+  ln -s libkmlengine.so.0.0.0 libkmlengine.so.0
+  ln -s libkmlregionator.so.0.0.0 libkmlregionator.so
+  ln -s libkmlregionator.so.0.0.0 libkmlregionator.so.0
+  ln -s libkmlxsd.so.0.0.0 libkmlxsd.so
+  ln -s libkmlxsd.so.0.0.0 libkmlxsd.so.0
+  ln -s libminizip.so.0.0.0 libminizip.so
+  ln -s libminizip.so.0.0.0 libminizip.so.0
+  ln -s liburiparser.so.1.0.5 liburiparser.so
+  ln -s liburiparser.so.1.0.5 liburiparser.so.1
+  # libecwj2
+  ln -s libNCSCnet.so.0.0.0 libNCSCnet.so
+  ln -s libNCSCnet.so.0.0.0 libNCSCnet.so.0
+  ln -s libNCSEcwC.so.0.0.0 libNCSEcwC.so
+  ln -s libNCSEcwC.so.0.0.0 libNCSEcwC.so.0
+  ln -s libNCSEcw.so.0.0.0 libNCSEcw.so
+  ln -s libNCSEcw.so.0.0.0 libNCSEcw.so.0
+  ln -s libNCSUtil.so.0.0.0 libNCSUtil.so
+  ln -s libNCSUtil.so.0.0.0 libNCSUtil.so.0
+  # MrSID_DSDK
+  ln -s libltidsdk.so.8 libltidsdk.so
+  ln -s liblti_lidar_dsdk.so.1 liblti_lidar_dsdk.so
   cd ../../../
   echo "-----> Bootstrapping gdal python modules"
   curl $GDAL_PYTHON -s | tar zxv -C .heroku/ &> /dev/null
