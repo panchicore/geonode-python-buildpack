@@ -5,11 +5,13 @@ puts-step "Installing dependencies with pip"
 [ ${FRESH_PYTHON:-} ] && bpwatch start pip_install_first
 
 if test -d $BUILD_DIR/vendor; then
+  puts-step "vendor directory found via pip"
   /app/.heroku/python/bin/pip install -r requirements.txt --exists-action=w --src=./.heroku/src --no-index --find-links=file://$BUILD_DIR/vendor | cleanup | indent
 
   cp requirements.txt .heroku/python/requirements-declared.txt
   /app/.heroku/python/bin/pip freeze --find-links=file://$BUILD_DIR/vendor --disable-pip-version-check > .heroku/python/requirements-installed.txt
 else
+  puts-step "vendor directory not found during pip"
   /app/.heroku/python/bin/pip install -r requirements.txt --exists-action=w --src=./.heroku/src | cleanup | indent
 
   cp requirements.txt .heroku/python/requirements-declared.txt

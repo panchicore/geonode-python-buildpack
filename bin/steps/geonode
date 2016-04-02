@@ -11,13 +11,15 @@ source $BIN_DIR/utils
 bpwatch start geonode_gdal_install
 
 # If GeoNode exists within requirements, use vendored gdal, geos and proj.
-if (pip-grep -s requirements.txt geonode-notification &> /dev/null) then
-
-  echo "-----> Noticed GeoNode. Bootstrapping gdal, geos and proj."
+if test -f cf/requirements.txt; then
+  echo "-----> Identified as a GeoNode CF Application"
+  echo "-----> Bootstrapping GDAL-2.0.1 Libs"
+  echo "-----> Bootstrapping GEOS-3.5.0 Libs"
+  echo "-----> Bootstrapping PROJ-4.9.2 Libs"
   mkdir -p .heroku/
   # Download and extract binaries + libraries into target vendor directory.
   curl $GEONODE_VENDOR -s | tar zxv -C .heroku/ &> /dev/null
-  echo "-----> Creating symbolic links for geonode libs"
+  echo "-----> Creating Symbolic Links for Libs"
   cd .heroku/vendor/lib/
   find -type l -delete
   # gdal
@@ -60,11 +62,11 @@ if (pip-grep -s requirements.txt geonode-notification &> /dev/null) then
   ln -s libltidsdk.so.8 libltidsdk.so
   ln -s liblti_lidar_dsdk.so.1 liblti_lidar_dsdk.so
   cd ../../../
-  echo "-----> Bootstrapping gdal python modules"
+  echo "-----> Bootstrapping GDAL Python Modules"
   curl $GDAL_PYTHON -s | tar zxv -C .heroku/ &> /dev/null
 
   mkdir -p .profile.d/
-  echo "-----> Adding profile.d script for geonode"
+  echo "-----> Adding profile.d Script for added Libs"
   cat <<EOF > .profile.d/geonode.sh
 export PATH="/app/.heroku/vendor/bin:/app/.heroku/python/bin:\$PATH"
 export LD_LIBRARY_PATH="/app/.heroku/vendor/lib/:/app/.heroku/python/lib/:\$LD_LIBRARY_PATH"
