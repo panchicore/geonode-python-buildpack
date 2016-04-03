@@ -12,6 +12,7 @@ bpwatch start geonode_gdal_install
 
 # If GeoNode exists within requirements, use vendored gdal, geos and proj.
 if test -f cf/requirements.txt; then
+  echo "-----> Stack is $STACK"
   echo "-----> Identified as a GeoNode CF Application"
   echo "-----> Bootstrapping GDAL-2.0.1 Libs"
   echo "-----> Bootstrapping GEOS-3.5.0 Libs"
