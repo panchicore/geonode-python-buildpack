@@ -2,7 +2,6 @@
 
 GEONODE_VENDOR="https://s3.amazonaws.com/boundlessps-public/cf/vendor.tar.gz"
 GDAL_PYTHON="https://s3.amazonaws.com/boundlessps-public/cf/python.tar.gz"
-VENDORED_LIBFFI="https://lang-python.s3.amazonaws.com/$STACK/libraries/vendor/libffi.tar.gz"
 
 PKG_CONFIG_PATH="/app/.heroku/vendor/lib/pkgconfig:$PKG_CONFIG_PATH"
 
@@ -18,17 +17,12 @@ if test -f cf/requirements.txt; then
   echo "-----> Bootstrapping GDAL-2.0.1 Libs"
   echo "-----> Bootstrapping GEOS-3.5.0 Libs"
   echo "-----> Bootstrapping PROJ-4.9.2 Libs"
-  echo "-----> Bootstrapping LIBFFI Libs"
   mkdir -p .heroku/
   # Download and extract binaries + libraries into target vendor directory.
   curl $GEONODE_VENDOR -s | tar zxv -C .heroku/ &> /dev/null
-  curl $VENDORED_LIBFFI -s | tar zxv -C .heroku/vendor &> /dev/null
   echo "-----> Creating Symbolic Links for Libs"
   cd .heroku/vendor/lib/
   find -type l -delete
-  # libffi
-  ln -s libffi.so.6.0.2 libffi.so
-  ln -s libffi.so.6.0.2 libffi.so.6
   # gdal
   ln -s libgdal.so.20.0.1 libgdal.so
   ln -s libgdal.so.20.0.1 libgdal.so.20
@@ -69,11 +63,14 @@ if test -f cf/requirements.txt; then
   ln -s libltidsdk.so.8 libltidsdk.so
   ln -s liblti_lidar_dsdk.so.1 liblti_lidar_dsdk.so
   cd ../../../
-  echo "-----> Bootstrapping GDAL Python Modules"
+  echo "-----> Bootstrapping Python Modules"
+  echo "-----> Bootstrapping GDAL==2.0.1"
+  echo "-----> Bootstrapping python-ldap==2.4.25"
+  echo "-----> Bootstrapping django-auth-ldap==1.2.7"
   curl $GDAL_PYTHON -s | tar zxv -C .heroku/ &> /dev/null
 
   mkdir -p .profile.d/
-  echo "-----> Adding profile.d Script for added Libs"
+  echo "-----> Adding .profile.d/geonode.sh for added Libs"
   cat <<EOF > .profile.d/geonode.sh
 export PATH="/app/.heroku/vendor/bin:/app/.heroku/python/bin:\$PATH"
 export LD_LIBRARY_PATH="/app/.heroku/vendor/lib/:/app/.heroku/python/lib/:\$LD_LIBRARY_PATH"
@@ -84,7 +81,6 @@ export CPPPATH="\$INCLUDE_PATH"
 export GDAL_DATA="/app/.heroku/vendor/share/gdal"
 export PROJ_LIB="/app/.heroku/vendor/share/proj"
 export GEOS_LIBRARY_PATH="/app/.heroku/vendor/lib"
-export LIBFFI="/app/.heroku/vendor/"
 EOF
 fi
 
