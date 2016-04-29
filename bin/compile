@@ -215,7 +215,7 @@ source $BIN_DIR/steps/cryptography
 # source $BIN_DIR/steps/gdal
 
 # GeoNode support.
-#source $BIN_DIR/steps/geonode
+source $BIN_DIR/steps/geonode
 
 # Install dependencies with Pip.
 source $BIN_DIR/steps/pip-install

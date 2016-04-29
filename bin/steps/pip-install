@@ -4,6 +4,8 @@ puts-step "Installing dependencies with pip"
 [ ! ${FRESH_PYTHON:-} ] && bpwatch start pip_install
 [ ${FRESH_PYTHON:-} ] && bpwatch start pip_install_first
 
+/app/.heroku/python/bin/pip install --upgrade pip
+
 if test -d $BUILD_DIR/vendor; then
   /app/.heroku/python/bin/pip install -r requirements.txt --exists-action=w --src=./.heroku/src --no-index --find-links=file://$BUILD_DIR/vendor | cleanup | indent
 
