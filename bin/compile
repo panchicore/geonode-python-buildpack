@@ -130,11 +130,11 @@ export PKG_CONFIG_PATH=/app/.heroku/vendor/lib/pkg-config:$BUILD_DIR/.heroku/ven
 # Switch to the repo's context.
 cd $BUILD_DIR
 
-# Warn for lack of Procfile.
-if [[ ! -f Procfile ]]; then
-  puts-warn 'Warning: Your application is missing a Procfile. This file tells Heroku how to run your application.'
-  puts-warn 'Learn more: https://devcenter.heroku.com/articles/procfile'
-fi
+## Warn for lack of Procfile.
+#if [[ ! -f Procfile ]]; then
+#  puts-warn 'Warning: Your application is missing a Procfile. This file tells Heroku how to run your application.'
+#  puts-warn 'Learn more: https://devcenter.heroku.com/articles/procfile'
+#fi
 
 # Experimental pre_compile hook.
 bpwatch start pre_compile
@@ -199,7 +199,7 @@ source $BIN_DIR/steps/python
 source $BIN_DIR/steps/setuptools
 
 # Uninstall removed dependencies with Pip.
-source $BIN_DIR/steps/pip-uninstall
+#source $BIN_DIR/steps/pip-uninstall
 
 # Mercurial support.
 source $BIN_DIR/steps/mercurial
@@ -215,13 +215,13 @@ source $BIN_DIR/steps/cryptography
 # source $BIN_DIR/steps/gdal
 
 # GeoNode support.
-source $BIN_DIR/steps/geonode
+#source $BIN_DIR/steps/geonode
 
 # Install dependencies with Pip.
 source $BIN_DIR/steps/pip-install
 
 # Django collectstatic support.
-sub-env $BIN_DIR/steps/collectstatic
+#sub-env $BIN_DIR/steps/collectstatic
 
 
 # ### Finalize
